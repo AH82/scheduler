@@ -8,19 +8,27 @@ selected:boolean - to determine if an interview is selected or not
 setInterviewer:function - sets the interviewer upon selection
 */
 import React from 'react';
-import 'InterviewerListItem.scss';
+import './InterviewerListItem.scss';
 import classNames from "classnames";
 
 
 export default function InterviewerListItem(props) {
+  const { id, name, avatar, selected, setInterviewer} = props;
+
+  const interviewerClass = classNames(
+    { "interviewers__item" : props},
+    { "interviewers__item--selected" : selected},
+    { "interviewers__item-image" : avatar}
+  );
+
   return (
-    <li className="interviewers__item">
+    <li id={id} className={interviewerClass} /* "interviewers__item" */ onClick={setInterviewer} >
       <img
-        className="interviewers__item-image"
-        src="https://i.imgur.com/LpaY82x.png"
-        alt="Sylvia Palmer"
+        className={interviewerClass}/* "interviewers__item-image" */
+        src={avatar}
+        alt={name}
       />
-      Sylvia Palmer
+      {name}
     </li>
   )
 };
