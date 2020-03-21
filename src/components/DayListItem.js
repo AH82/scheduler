@@ -1,19 +1,6 @@
 import React from "react";
 import "./DayListItem.scss";
 import classNames from "classnames";
-/* 
-name: String the name of the day
-spots: Number the number of spots remaining
-selected: Boolean true or false declaring that this day is selected
-setDay: Function accepts the name of the day eg. "Monday", "Tuesday"
-*/
-
-/* 
-The <li> represents the entire day item
-The <h2> should display the day name
-The <h3> should display the spots remaining for a day
-*/
-
 
 export default function DayListItem(props) {
 
