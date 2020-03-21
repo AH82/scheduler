@@ -26,7 +26,7 @@ export default function InterviewerList(props) {
           return (
             <InterviewerListItem
             key={index}
-            id={props.id}
+            id={interviewer.id}
             name={interviewer.name}
             avatar={interviewer.avatar}
             selected={props.interviewer === interviewer.id /* index+1 */}
