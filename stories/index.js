@@ -106,7 +106,8 @@ storiesOf("InterviewerListItem", module)
       id={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
-      setInterviewer={action("setInterviewer")}
+      // setInterviewer={action("setInterviewer")}
+      setInterviewer={event => action("setInterviewer")(interviewer.id)}
     />
   ));
 
@@ -128,6 +129,8 @@ storiesOf("InterviewerList", module)
     <InterviewerList
       interviewers={interviewers}
       setInterviewer={action("setInterviewer")}
+      // setInterviewer={event => action("setInterviewer")(interviewer.id)}
+      // -> gives [1] on everyone, why?
     />
   ))
   .add("Preselected", () => (
@@ -135,8 +138,9 @@ storiesOf("InterviewerList", module)
       interviewers={interviewers}
       interviewer={3}
       setInterviewer={action("setInterviewer")}
+      // setInterviewer={event => action("setInterviewer")(interviewer.id)}
+      // -> gives [1] on everyone, why?
     />
   ));
-
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
