@@ -7,7 +7,7 @@ setInterviewer:function - a function that accepts an interviewer id
 */
 import React from 'react';
 import './InterviewerList.scss';
-import classNames from "classnames";
+// import classNames from "classnames";
 import InterviewerListItem from "./InterviewerListItem.js";
 
 export default function InterviewerList(props) {
