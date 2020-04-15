@@ -47,6 +47,14 @@ const appointments = [
   {
     id: 4,
     time: "3pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
   },
   {
     id: 5,
@@ -84,14 +92,11 @@ export default function Application(props) {
       <section className="schedule">
         {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
         {
-          appointments.map(appointement => {
+          appointments.map(appointment => {
             return (
               <Appointment 
-              key={appointement.id} 
-              // {...appointment} // crashing!
-              id={appointement.id}
-              time={appointement.time}
-              interview={appointement.interview}
+              key={appointment.id} 
+              {...appointment} 
 
               />
 
