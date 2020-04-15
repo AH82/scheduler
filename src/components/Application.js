@@ -39,7 +39,19 @@ const appointments = [
         avatar: "https://i.imgur.com/LpaY82x.png",
       }
     }
-  }
+  },
+  {
+    id: 3,
+    time: "2pm",
+  },
+  {
+    id: 4,
+    time: "3pm",
+  },
+  {
+    id: 5,
+    time: "4pm",
+  },
 ];
 
 
@@ -75,9 +87,12 @@ export default function Application(props) {
           appointments.map(appointement => {
             return (
               <Appointment 
+              key={appointement.id} 
+              // {...appointment} // crashing!
               id={appointement.id}
               time={appointement.time}
               interview={appointement.interview}
+
               />
 
             ) 
