@@ -24,3 +24,14 @@ function selectUserByName(state, name) {
 
 2 keys: days / 
 */
+
+export function getInterview(state, interview) {
+  console.log('interview -> ', interview)
+  if (!interview) { return null };
+  return (
+    {
+      ...interview, 
+      interviewer: state.interviewers[interview.interviewer]
+    }
+      );
+};
