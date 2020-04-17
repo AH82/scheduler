@@ -13,7 +13,24 @@ export function getAppointmentsForDay(state, day) {
     );
 
   return selectedAppointments;
-}
+};
+
+export function getInterviewersForDay(state, day) {
+  
+  if (!state.days[0]) {return [] };
+  
+  const [selectedDay] =  state.days.filter(
+    singleDay => singleDay.name === day
+    );
+    
+  if (!selectedDay) {return []};
+
+  const selectedInterviewers = selectedDay.interviewers.map( 
+    singleInterviewer => state.interviewers[singleInterviewer] 
+    );
+
+  return selectedInterviewers;
+};
 
 
 /* 
