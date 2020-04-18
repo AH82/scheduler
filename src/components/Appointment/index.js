@@ -5,7 +5,8 @@ import Show from './Show';
 import Empty  from "./Empty";
 import useVisualMode from 'hooks/useVisualMode';
 import Form from './Form';
-import Status from './Status'
+import Status from './Status';
+import Confirm from './Confirm';
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -45,33 +46,48 @@ export default function Appointment(props) {
 
   return (
     <article className="appointment">
-      <Header time={props.time}/>
+
+        <Header time={props.time}/>
       
-      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      {mode === EMPTY && 
+        <Empty onAdd={() => transition(CREATE)}/>}
+
+      {mode === SAVING && 
+        (<Status message="Saving..."/>)}
+
+      {mode === DELETING && 
+        (<Status message="Deleting..."/>)}
       
-      {mode === SHOW && (
+      {mode === SHOW && 
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer.name}
-          onDelete={deleteIt}
+          onDelete={()=> transition(CONFIRM)/* deleteIt */}
           id={props.id}
           interview={props.interview}
-        />
-      )}
+        />}
+      
+      {mode === CONFIRM &&  
+        <Confirm 
+          message="Delete the appointment?"
+          onCancel={()=>back()} 
+          onConfirm={deleteIt}
+          id={props.id}
+          interview={props.interview}
+        />}
 
-      { mode === CREATE && (
+      {mode === CREATE && (
         <Form
-        interviewers={props.interviewers}
-        onCancel={()=>back()}
-        onSave={save}
-        id={props.id} 
-        // interview={props.interview}
-        /* this "id" extra prop is sent down to Form, 
-        for bookInterview((props.id, interview) to capture it */
-      />)}
+          interviewers={props.interviewers}
+          onCancel={()=>back()}
+          onSave={save}
+          id={props.id} 
+          // interview={props.interview}
+          /* this "id" extra prop is sent down to Form, 
+          for bookInterview((props.id, interview) to capture it */
+        />)}
 
-      {mode === SAVING && (<Status message="Saving..."/>)}
-      {mode === DELETING && (<Status message="Deleting..."/>)}
+      
 
       {/* old code for reference only  */}
 
