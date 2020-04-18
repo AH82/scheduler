@@ -99,11 +99,11 @@ export default function Application(props) {
       [id]: appointment
     };
     // setState({ ...state, appointments});
-    console.log('[bookInterview] interview is ===> ', interview)
+    console.log('[bookInterview] interview is ===> ', appointment)
 
     return axios.put(`/api/appointments/${id}`, appointment )
     .then((response)=>{
-      console.log('axios put response = ', response);
+      console.log('[bookInterview] axios put response = ', response);
       setState({ ...state, appointments});
       })
       .catch((err) => {
@@ -111,6 +111,27 @@ export default function Application(props) {
       });
     };
   
+    function cancelInterview(id){
+      const appointment = {
+        ...state.appointments[id],
+        interview: null
+      };
+      console.log("[cancelInterview] appointment = ", appointment)
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      console.log("[cancelInterview] appointments = ", appointments)
+      
+      return axios.delete(`/api/appointments/${id}`, appointment.interview)
+      .then((response)=>{
+        console.log('[cancelInterview] axios put response = ', response);
+        setState({ ...state, appointments});
+        })
+        .catch((err) => {
+          console.log(`\t-> Error: ${err}!`);
+        });
+    }
 
   return (
     <main className="layout">
@@ -140,6 +161,7 @@ export default function Application(props) {
         {
           appointments.map(appointment => {
             const interview = getInterview(state, appointment.interview);
+            console.log("interview @ map = ", interview)
             return (
               <Appointment 
               key={appointment.id} 
@@ -147,6 +169,7 @@ export default function Application(props) {
                interview={interview}
                interviewers={interviewers}
                bookInterview={bookInterview}
+               cancelInterview={cancelInterview}
 
               />
 

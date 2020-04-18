@@ -11,6 +11,8 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
+const CONFIRM = "CONFIRM"; // confirm delete
 
 
 
@@ -31,17 +33,32 @@ export default function Appointment(props) {
     .then(()=>transition(SHOW));
   };
 
+  function deleteIt() {
+    const interview = null
+    transition(DELETING)
+    props.cancelInterview(props.id)
+    .then(()=> transition(EMPTY));
+    // .then(()=> transition(props.interview === null ? EMPTY : SHOW));
+    // this does not work and causes errors. why ?
+
+  };
+
   return (
     <article className="appointment">
       <Header time={props.time}/>
       
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      
       {mode === SHOW && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer.name}
+          onDelete={deleteIt}
+          id={props.id}
+          interview={props.interview}
         />
       )}
+
       { mode === CREATE && (
         <Form
         interviewers={props.interviewers}
@@ -52,7 +69,9 @@ export default function Appointment(props) {
         /* this "id" extra prop is sent down to Form, 
         for bookInterview((props.id, interview) to capture it */
       />)}
-      {mode === SAVING && (<Status message="Saving"/>)}
+
+      {mode === SAVING && (<Status message="Saving..."/>)}
+      {mode === DELETING && (<Status message="Deleting..."/>)}
 
       {/* old code for reference only  */}
 
