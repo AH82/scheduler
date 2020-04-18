@@ -66,6 +66,19 @@ export default function Application(props) {
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({ ...state, appointments });
+  };
+  
   useEffect( ()=> {
     Promise.all([
       Promise.resolve(axios.get(`/api/days`)),
@@ -120,6 +133,7 @@ export default function Application(props) {
               {...appointment}
                interview={interview}
                interviewers={interviewers}
+               bookInterview={bookInterview}
 
               />
 
@@ -127,7 +141,7 @@ export default function Application(props) {
           })
 
         }
-        {<Appointment key="last" time="5pm" />}
+        {<Appointment key="last" time="5pm"  bookInterview={bookInterview}/>}
       </section>
     </main>
   );
