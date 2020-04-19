@@ -17,6 +17,7 @@ export default function useApplicationData (initial) {
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
   useEffect( ()=> {
+    
     Promise.all([
       Promise.resolve(axios.get(`/api/days`)),
       Promise.resolve(axios.get(`/api/appointments`)),
@@ -30,6 +31,16 @@ export default function useApplicationData (initial) {
           }));
       });
   },[]);
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  
+  // -> re-gets days to re-render to update spots
+  function remainingSpots() {
+    axios.get(`/api/days`)
+    .then( (res) => {
+      setState(prev => ({...prev, days: res.data}));
+    });
+  };
 
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -48,6 +59,8 @@ export default function useApplicationData (initial) {
     .then((response)=>{
       console.log('[bookInterview] axios put response = ', response);
       setState({ ...state, appointments});
+      remainingSpots();
+
       })
     };
   
@@ -67,6 +80,7 @@ export default function useApplicationData (initial) {
       .then((response)=>{
         console.log('[cancelInterview] axios put response = ', response);
         setState({ ...state, appointments});
+        remainingSpots();
         })
     };
 
