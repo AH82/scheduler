@@ -106,9 +106,9 @@ export default function Application(props) {
       console.log('[bookInterview] axios put response = ', response);
       setState({ ...state, appointments});
       })
-      .catch((err) => {
-        console.log(`\t-> Error: ${err}!`);
-      });
+      // .catch((err) => {
+      //   console.log(`\t-> Error: ${err}!`);
+      // });
     };
   
     function cancelInterview(id){
@@ -128,9 +128,9 @@ export default function Application(props) {
         console.log('[cancelInterview] axios put response = ', response);
         setState({ ...state, appointments});
         })
-        .catch((err) => {
-          console.log(`\t-> Error: ${err}!`);
-        });
+        // .catch((err) => {
+        //   console.log(`\t-> Error: ${err}!`);
+        // });
     }
 
   return (

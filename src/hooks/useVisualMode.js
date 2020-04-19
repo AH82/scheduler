@@ -8,10 +8,11 @@ export default function useVisualMode (initial) {
     const tempHistory = [...history]
     if (replace) {
       tempHistory.pop();
+
       setHistory([...tempHistory]);
     } 
-      setHistory([...tempHistory, newMode]);
-      return setMode(newMode) 
+    setHistory((tempHistory) => [...tempHistory, newMode]);
+    return setMode(newMode) 
     
   }
 
@@ -23,10 +24,12 @@ export default function useVisualMode (initial) {
     setHistory([...tempHistory]);
     const prevMode = tempHistory[tempHistory.length - 1];
 
+    console.log("[back] history = ", history);
     if(tempHistory.length > 0) {
       return setMode(prevMode);
     }
   }
+
 
   return (
     { mode, transition, back }

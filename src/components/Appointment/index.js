@@ -7,6 +7,7 @@ import useVisualMode from 'hooks/useVisualMode';
 import Form from './Form';
 import Status from './Status';
 import Confirm from './Confirm';
+import Error from './Error';
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -15,6 +16,8 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM"; // confirm delete
 const EDIT = "EDIT";
+const ERROR_SAVE  = "ERROR_SAVE ";
+const ERROR_DELETE = "ERROR_DELETE";
 
 
 
@@ -32,14 +35,16 @@ export default function Appointment(props) {
 
     transition(SAVING)
     props.bookInterview(props.id, interview)
-    .then(()=>transition(SHOW));
+    .then(() => transition(SHOW))
+    .catch((err) => transition(ERROR_SAVE, true));
   };
-
-  function deleteIt() {
-    const interview = null
+  
+  function deleteIt() { // Note: Compass calls it destroy()
     transition(DELETING)
     props.cancelInterview(props.id)
-    .then(()=> transition(EMPTY));
+    .then(() => transition(EMPTY))
+    .catch((err) => transition(ERROR_DELETE, true));
+
     // .then(()=> transition(props.interview === null ? EMPTY : SHOW));
     // this does not work and causes errors. why ?
 
@@ -101,6 +106,18 @@ export default function Appointment(props) {
           /* this "id" extra prop is sent down to Form, 
           for bookInterview((props.id, interview) to capture it */
         />)}
+
+        {mode === ERROR_SAVE &&
+          <Error 
+            message="Something went wrong.. Could not save appointment"
+            onClose={()=>back()}
+          />}
+
+        {mode === ERROR_DELETE &&
+          <Error 
+            message="Something went wrong.. Could not delete appointment"
+            onClose={()=>back()}
+          />}
 
       
 
