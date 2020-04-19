@@ -20,7 +20,7 @@ export default function useVisualMode (initial) {
     const tempHistory =  [...history];
     tempHistory.pop();
 
-    setHistory([tempHistory]);
+    setHistory([...tempHistory]);
     const prevMode = tempHistory[tempHistory.length - 1];
 
     if(tempHistory.length > 0) {
