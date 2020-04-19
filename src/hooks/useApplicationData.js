@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 
 
@@ -13,9 +13,8 @@ export default function useApplicationData (initial) {
   });
 
   const setDay = day => setState({ ...state, day });
-  // const setDays = days => setState(prev => ({ ...prev, days }));
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
   useEffect( ()=> {
     Promise.all([
@@ -23,7 +22,6 @@ export default function useApplicationData (initial) {
       Promise.resolve(axios.get(`/api/appointments`)),
       Promise.resolve(axios.get(`/api/interviewers`))
     ]).then((all) => {
-        console.log('all ===> ', all);
         setState(prev => ({
           ...prev, 
           days: all[0].data, 
@@ -31,12 +29,9 @@ export default function useApplicationData (initial) {
           interviewers: all[2].data 
           }));
       });
-    /* axios.get(`/api/days`).then( (response) => { setDays(response.data) })  */
-  },[])
+  },[]);
 
-  console.log('state.interviewers ===> ', state.interviewers)
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
   function bookInterview(id, interview) {
     console.log(id, interview);
@@ -48,44 +43,34 @@ export default function useApplicationData (initial) {
       ...state.appointments,
       [id]: appointment
     };
-    // setState({ ...state, appointments});
-    console.log('[bookInterview] interview is ===> ', appointment)
 
     return axios.put(`/api/appointments/${id}`, appointment )
     .then((response)=>{
       console.log('[bookInterview] axios put response = ', response);
       setState({ ...state, appointments});
       })
-      // .catch((err) => {
-      //   console.log(`\t-> Error: ${err}!`);
-      // });
     };
   
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     function cancelInterview(id){
       const appointment = {
         ...state.appointments[id],
         interview: null
       };
-      console.log("[cancelInterview] appointment = ", appointment)
       const appointments = {
         ...state.appointments,
         [id]: appointment
       };
-      console.log("[cancelInterview] appointments = ", appointments)
       
       return axios.delete(`/api/appointments/${id}`, appointment.interview)
       .then((response)=>{
         console.log('[cancelInterview] axios put response = ', response);
         setState({ ...state, appointments});
         })
-        // .catch((err) => {
-        //   console.log(`\t-> Error: ${err}!`);
-        // });
-    }
+    };
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
   return (
     {
@@ -94,5 +79,5 @@ export default function useApplicationData (initial) {
       bookInterview,
       cancelInterview
     }
-  )
+  );
 }
