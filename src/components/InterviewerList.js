@@ -9,10 +9,15 @@ import React from 'react';
 import './InterviewerList.scss';
 // import classNames from "classnames";
 import InterviewerListItem from "./InterviewerListItem.js";
+import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
   const { interviewers, interviewer, setInterviewer} = props;
 
+  InterviewerList.propTypes = {
+    interviewer: PropTypes.number,
+    setInterviewer: PropTypes.func.isRequired
+  };
 
   return (
     <section className="interviewers">
