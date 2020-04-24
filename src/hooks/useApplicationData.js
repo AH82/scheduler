@@ -110,6 +110,8 @@ export default function useApplicationData (initial) {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /*  
+THE FOLLOWING CODE IS KEPT FOR LEARNING PURPOSES, 
+IT SHOULD HAVE BEEN DELETED 
 AT THE END OF THE DAY,
 THIS IS A LEARNING PROJECT, 
 I HAVE KEPT THE CODE OF FAILED TRIALS 
