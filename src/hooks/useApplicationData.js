@@ -53,7 +53,7 @@ export default function useApplicationData (initial) {
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    // console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -65,7 +65,7 @@ export default function useApplicationData (initial) {
     
     return axios.put(`/api/appointments/${id}`, appointment )
     .then((response)=>{
-      console.log('[bookInterview] axios put response = ', response);
+      // console.log('[bookInterview] axios put response = ', response);
       // const days = remainingSpots(id);
       const days = remainingSpots(appointments);
       setState({ ...state, appointments, days });
@@ -86,7 +86,7 @@ export default function useApplicationData (initial) {
     
     return axios.delete(`/api/appointments/${id}`, appointment.interview)
     .then((response)=>{
-      console.log('[cancelInterview] axios delete response = ', response);
+      // console.log('[cancelInterview] axios delete response = ', response);
       // const days = remainingSpots(id);
       const days = remainingSpots(appointments);
       setState({ ...state, appointments, days});
