@@ -9,6 +9,7 @@ import Status from './Status';
 import Confirm from './Confirm';
 import Error from './Error';
 
+/* * * * * MODES * * * * */
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
@@ -18,8 +19,7 @@ const CONFIRM = "CONFIRM"; // confirm delete
 const EDIT = "EDIT";
 const ERROR_SAVE  = "ERROR_SAVE ";
 const ERROR_DELETE = "ERROR_DELETE";
-
-
+/* * * * * * * * * * * * */
 
 
 export default function Appointment(props) {
@@ -39,15 +39,11 @@ export default function Appointment(props) {
     .catch((err) => transition(ERROR_SAVE, true));
   };
   
-  function deleteIt() { // Note: Compass calls it destroy()
+  function deleteIt() { // Note: LHL's Compass calls it destroy()
     transition(DELETING)
     props.cancelInterview(props.id)
     .then(() => transition(EMPTY))
     .catch((err) => transition(ERROR_DELETE, true));
-
-    // .then(()=> transition(props.interview === null ? EMPTY : SHOW));
-    // this does not work and causes errors. why ?
-
   };
 
   return (
@@ -68,7 +64,7 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer.name}
-          onDelete={()=> transition(CONFIRM)/* deleteIt */}
+          onDelete={()=> transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
           id={props.id}
           interview={props.interview}
@@ -89,9 +85,6 @@ export default function Appointment(props) {
           onCancel={()=>back()}
           onSave={save}
           id={props.id} 
-          // interview={props.interview}
-          /* this "id" extra prop is sent down to Form, 
-          for bookInterview((props.id, interview) to capture it */
         />)}
 
       {mode === EDIT && (
@@ -102,9 +95,6 @@ export default function Appointment(props) {
           onCancel={()=>back()}
           onSave={save}
           id={props.id} 
-          // interview={props.interview}
-          /* this "id" extra prop is sent down to Form, 
-          for bookInterview((props.id, interview) to capture it */
         />)}
 
         {mode === ERROR_SAVE &&
@@ -118,17 +108,6 @@ export default function Appointment(props) {
             message="Something went wrong.. Could not delete appointment"
             onClose={()=>back()}
           />}
-
-      
-
-      {/* old code for reference only  */}
-
-      {/* {props.interview ? 
-      <Show 
-        student={props.interview.student} 
-        interviewer={props.interview.interviewer.name} 
-      /> 
-      : <Empty  onAdd={props.onAdd />} */}
     </article>
   )
 }

@@ -1,7 +1,5 @@
 import React from "react";
-// import "./DayList.scss";
 import DayListItem from "components/DayListItem.js";
-// import classNames from "classnames";
 
 export default function DayList(props) {
 
